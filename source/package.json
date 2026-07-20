@@ -1,0 +1,18 @@
+{
+  "name": "n64-reaction-time",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "verify": "node verify_rom.mjs build/reaction_time_gliden64.z64 && node verify_rdp_commands.mjs"
+  },
+  "dependencies": {
+    "romdev-core-host": "^0.2.0",
+    "romdev-core-parallel-n64": "^0.2.0",
+    "romdevtools": "^0.103.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

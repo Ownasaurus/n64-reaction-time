@@ -1,0 +1,59 @@
+--- cc1 (main.c) ---
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+ random_next center_text number_to_text draw_common_frame show_wait_screen show_go_screen show_early_screen show_result_screen wait_for_button_release main
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <*free_lang_data> {heap 32M} <visibility> {heap 32M} <build_ssa_passes> {heap 32M} <opt_local_passes> {heap 33M} <remove_symbols> {heap 33M} <targetclone> {heap 33M} <free-fnsummary> {heap 33M} <emutls> {heap 33M}Streaming LTO
+ <whole-program> {heap 33M} <profile_estimate> {heap 33M} <icf> {heap 33M} <devirt> {heap 33M} <cp> {heap 33M} <sra> {heap 33M} <fnsummary> {heap 33M} <inline> {heap 33M} <pure-const> {heap 33M} <modref> {heap 33M} <free-fnsummary> {heap 33M} <static-var> {heap 33M} <single-use> {heap 33M}Assembling functions:
+ show_wait_screen main
+Time variable                                   usr           sys          wall           GGC
+ TOTAL                              :   0.00          0.00          0.00         1460k
+
+--- as (main.c) ---
+(ok)
+--- cc1 (n64.c) ---
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+ glyph_row timer_read timer_wait_ms rdp_emit rdp_set_fill_color rdp_begin rdp_submit wait_for_vblank_start rdp_clear_target video_init video_begin_frame video_present draw_rect integer_sqrt draw_circle draw_text text_width si_wait_idle controller_read
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <*free_lang_data> {heap 32M} <visibility> {heap 32M} <build_ssa_passes> {heap 32M} <opt_local_passes> {heap 33M} <remove_symbols> {heap 33M} <targetclone> {heap 33M} <free-fnsummary> {heap 33M} <emutls> {heap 33M}Streaming LTO
+ <whole-program> {heap 33M} <profile_estimate> {heap 33M} <icf> {heap 33M} <devirt> {heap 33M} <cp> {heap 33M} <sra> {heap 33M} <fnsummary> {heap 33M} <inline> {heap 33M} <pure-const> {heap 33M} <modref> {heap 33M} <free-fnsummary> {heap 33M} <static-var> {heap 33M} <single-use> {heap 33M}Assembling functions:
+ rdp_submit rdp_begin timer_read timer_wait_ms video_init video_begin_frame video_present draw_rect draw_circle draw_text text_width controller_read
+Time variable                                   usr           sys          wall           GGC
+ phase opt and generate             :   0.00 (  0%)   0.00 (  0%)   0.00 (  0%)  1425k ( 65%)
+ callgraph functions expansion      :   0.00 (  0%)   0.00 (  0%)   0.00 (  0%)  1080k ( 49%)
+ TOTAL                              :   0.00          0.00          0.00         2193k
+
+--- as (n64.c) ---
+(ok)
+--- as (n64-crt0.s) ---
+(ok)
+--- cc1 (softint.c) ---
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+warning: unsupported syscall: __syscall_prlimit64
+ udivmod64 __udivdi3 __umoddi3 __divdi3 __moddi3
+Analyzing compilation unit
+Performing interprocedural optimizations
+ <*free_lang_data> {heap 32M} <visibility> {heap 32M} <build_ssa_passes> {heap 32M} <opt_local_passes> {heap 33M} <remove_symbols> {heap 33M} <targetclone> {heap 33M} <free-fnsummary> {heap 33M} <emutls> {heap 33M}Streaming LTO
+ <whole-program> {heap 33M} <profile_estimate> {heap 33M} <icf> {heap 33M} <devirt> {heap 33M} <cp> {heap 33M} <sra> {heap 33M} <fnsummary> {heap 33M} <inline> {heap 33M} <pure-const> {heap 33M} <modref> {heap 33M} <free-fnsummary> {heap 33M} <static-var> {heap 33M} <single-use> {heap 33M}Assembling functions:
+ __udivdi3 __umoddi3 __divdi3 __moddi3
+Time variable                                   usr           sys          wall           GGC
+ TOTAL                              :   0.00          0.00          0.00         1328k
+
+--- as (softint.c) ---
+(ok)
+--- ld ---
+(ok)
+--- objcopy ---
+(ok)
