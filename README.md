@@ -20,17 +20,15 @@ FillRectangle, PipeSync, and FullSync.
 ```bash
 npm install
 node build.mjs
-node verify\_rom.mjs
-node verify\_rdp\_commands.mjs
+node verify_rom.mjs
+node verify_rdp_commands.mjs
 ```
 
-Output: `build/reaction\_time\_gliden64.z64`
+Output: `build/reaction_time_gliden64.z64`
 
 The ROM is intended for RMG-K with GLideN64 and should remain compatible with
 ParaLLEl. Runtime behavior still needs validation in the user's Windows RMG-K
 build because that exact GUI/plugin environment is not available here.
-
-
 
 Vibe coded with ChatGPT-5.6-Sol on High intelligence.
 
