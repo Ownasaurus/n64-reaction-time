@@ -1,34 +1,38 @@
-# N64 Reaction Time Test — RDP / GLideN64 build
+# N64 Reaction Time Test — 4-player statistics build
 
-This version keeps the RMG-K-compatible flat ROM boot path and safe Joybus
-controller handling from the working ParaLLEl build, but replaces all direct
-CPU framebuffer drawing with normal RDP command lists.
+This revision keeps the RMG-K/GLideN64-compatible RDP rendering and flat ROM
+boot path, while extending the reaction test to all four N64 controller ports.
 
-## Rendering changes
+## Behavior
 
-* Uses DPC\_START / DPC\_END to submit raw RDP command lists.
-* Uses SetColorImage, SetOtherModes (fill cycle), SetScissor, SetFillColor,
-FillRectangle, PipeSync, and FullSync.
-* Draws the panel, circles, text, and background through RDP fill rectangles.
-* Double-buffers at 320x240 RGBA5551.
-* Waits for vertical blank before changing VI\_ORIGIN.
-* Clears the DP interrupt after polling FullSync completion.
-* Does not depend on GLideN64's CPU-framebuffer-write detection.
+- Polls controller ports 1 through 4 in one standard Joybus/PIF transaction.
+- The first non-Start digital button seen from any player completes the trial.
+- A premature non-Start press from any player produces `TOO EARLY!`.
+- Start on any controller resets all statistics and does not count as a trial.
+- Tracks global successful-trial statistics:
+  - minimum reaction time
+  - maximum reaction time
+  - rounded arithmetic average
+  - successful run count
+- Statistics begin at zero and false starts are not included.
+- Controller reads remain approximately 1 kHz inside the ROM. Under RMG-K
+  rollback, the synchronized input value may still update once per emulated frame.
+
+## Rendering
+
+- Standard RDP command lists submitted through DPC_START / DPC_END.
+- Double-buffered 320x240 RGBA5551 output.
+- VI_ORIGIN changes only during vertical blank.
+- Compatible with the GLideN64 rendering path used by RMG-K and with ParaLLEl.
 
 ## Build
 
 ```bash
 npm install
 node build.mjs
-node verify_rom.mjs
-node verify_rdp_commands.mjs
+npm run verify
 ```
 
-Output: `build/reaction_time_gliden64.z64`
-
-The ROM is intended for RMG-K with GLideN64 and should remain compatible with
-ParaLLEl. Runtime behavior still needs validation in the user's Windows RMG-K
-build because that exact GUI/plugin environment is not available here.
+Output: `build/reaction_time_4p_stats.z64`
 
 Vibe coded with ChatGPT-5.6-Sol on High intelligence.
-

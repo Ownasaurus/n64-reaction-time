@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-const path = resolve(process.argv[2] || 'build/reaction_time_gliden64.z64');
+const path = resolve(process.argv[2] || 'build/reaction_time_4p_stats.z64');
 const rom = new Uint8Array(await readFile(path));
 const fail = (message) => { throw new Error(message); };
 const be32 = (offset) =>

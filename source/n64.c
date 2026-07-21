@@ -320,16 +320,21 @@ unsigned int controller_read(void)
     const unsigned int physical = PIF_BUFFER_PHYS;
     volatile unsigned char *buffer = (volatile unsigned char *)UNCACHED_ADDR(PIF_BUFFER_PHYS);
     unsigned int i;
-    unsigned int buttons;
+    unsigned int player;
+    unsigned int buttons = 0u;
 
     if (!si_wait_idle()) return 0u;
     SI_REG(6) = 0u;
     for (i = 0; i < 64u; ++i) buffer[i] = 0u;
 
-    buffer[0] = 0x01u;
-    buffer[1] = 0x04u;
-    buffer[2] = 0x01u;
-    buffer[7] = 0xFEu;
+    /* Four standard Joybus controller-read commands, one for each channel. */
+    for (player = 0u; player < 4u; ++player) {
+        const unsigned int base = player * 7u;
+        buffer[base + 0u] = 0x01u;
+        buffer[base + 1u] = 0x04u;
+        buffer[base + 2u] = 0x01u;
+    }
+    buffer[28] = 0xFEu;
     buffer[63] = 0x01u;
 
     SI_REG(0) = physical;
@@ -341,7 +346,16 @@ unsigned int controller_read(void)
     if (!si_wait_idle()) return 0u;
     SI_REG(6) = 0u;
 
-    if (buffer[1] & 0xC0u) return 0u;
-    buttons = ((unsigned int)buffer[3] << 8) | (unsigned int)buffer[4];
+    for (player = 0u; player < 4u; ++player) {
+        const unsigned int base = player * 7u;
+        unsigned int player_buttons;
+
+        /* Bits 6..7 in the receive-length byte report no-device/error. */
+        if (buffer[base + 1u] & 0xC0u) continue;
+        player_buttons = ((unsigned int)buffer[base + 3u] << 8) |
+                         (unsigned int)buffer[base + 4u];
+        buttons |= player_buttons;
+    }
+
     return buttons & PAD_ANY;
 }
